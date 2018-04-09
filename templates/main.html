@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
+<!--<link href="./style.css" rel="stylesheet">-->
+<style>
+
+#box1 {
+    border: 1px solid;
+    width: 50%;
+    padding: 10px;
+    box-shadow: 5px 10px 18px #888888;
+}
+
+h2 {
+	color: black;
+}
+
+.sidenav {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+
+<div class="sidenav">
+  <a href="/view_notes">Notes</a>
+  <a href="/view_diary">Diary</a>
+  <a href="#clients">Schedule</a>
+</div>
+
+<div class="main"> <br>
+  <h2>Today's Schedule</h2><br>
+  <div id="box1">
+	<p>#TODO</p>
+	<br><br><br><br><br>
+  </div>
+  <br><br>
+  <h2>Today's Summary</h2><br>
+   <form action = "{{ url_for('add_diary') }}" method = "POST">
+   <div class ="container">
+  <div class="timings">
+  	<span> 6-8 </span>   AM <br><br><br><br><br><br><br>
+  	<span> 9-12 </span>  AM <br><br><br><br><br><br><br>
+	<span> 12-4 </span>  PM <br><br><br><br><br><br><br>
+	<span> 4-6 </span>   PM <br><br><br><br><br><br><br>
+	<span> 6-8 </span>   PM <br><br><br><br><br><br><br>
+	<span> 8-10 </span>  PM <br><br><br><br><br><br><br>
+	<span> 10-12 </span> PM <br><br><br><br><br><br><br>
+  </div>
+
+  <div class="days" id="events">
+	<textarea name="1" rows="5" cols="80"></textarea><br><br>
+	<textarea name="2" rows="5" cols="80"></textarea><br><br>
+	<textarea name="3" rows="5" cols="80"></textarea><br><br>
+	<textarea name="4" rows="5" cols="80"></textarea><br><br>
+	<textarea name="5" rows="5" cols="80"></textarea><br><br>
+	<textarea name="6" rows="5" cols="80"></textarea><br><br>
+	<textarea name="7" rows="5" cols="80"></textarea><br><br>
+  </div>
+
+</div>
+<input type="submit" value="Submit">
+</form> 
+</div>
+     
+</body>
+</html>
