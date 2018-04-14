@@ -19,7 +19,9 @@ import utils.functions as functions
 import datetime
 from datetime import date as _date
 import markdown
+import pymdownx
 import sqlite3
+
 import random
 
 app = Flask(__name__)
@@ -28,7 +30,20 @@ pagedown = PageDown(app)
 parser = reqparse.RequestParser()
 app.secret_key = str(random.randint(1, 20))
 
+"""extensions = [
+    'markdown.extensions.tables',
+    'pymdownx.magiclink',
+    'pymdownx.betterem',
+    'pymdownx.tilde',
+    'pymdownx.emoji',
+    'pymdownx.tasklist',
+    'pymdownx.superfences'
+]"""
 
+extensions = [
+	'markdown.extensions.tables',
+	'pymdownx.tasklist'
+]
 
 ############################################## Profile-Logic ##########################################################
 
@@ -183,7 +198,13 @@ def logout():
 @app.route('/main/')
 @login_required
 def main_page():
-	return render_template("main.html")
+    """if request.method == 'GET':
+        today_todo = request.form['today_todo']
+        message = functions.add_todoos(session['username'],str(_date.today()),today_todo)
+    else :
+        today_todo = ""
+        message ="""
+    return render_template("main.html")
 
 ################################################ Diary-Logic #########################################################
 
@@ -250,7 +271,7 @@ def add_note():
     if form.validate_on_submit():
         note_title = request.form['note_title']
         note_markdown = form.note.data
-        note = Markup(markdown.markdown(note_markdown))
+        note = Markup(markdown.markdown(note_markdown,  extensions=extensions))
 
         try:
             tags = form.tags.data
@@ -304,7 +325,7 @@ def edit_note(note_id):
         except:
             tags = None
 
-        note = Markup(markdown.markdown(note_markdown))
+        note = Markup(markdown.markdown(note_markdown ,  extensions=extensions))
         functions.edit_note(note_title, note, note_markdown, tags, note_id=note_id)
         return redirect('/view_notes/')
 
