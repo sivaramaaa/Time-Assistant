@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> Notes </title>
+        <link rel='stylesheet' href='{{ url_for("static", filename="css/bootstrap.min.css") }}'>
+        <link rel='stylesheet' href='{{ url_for("static", filename="css/base.css") }}'>
+
+<style>
+
+h2 {
+	color: black;
+}
+
+.sidenav {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+ .task-list-item {
+  list-style-type: none !important;
+}
+
+ .task-list-item input[type="checkbox"] {
+  margin: 0 4px 0.25em -20px;
+
+
+  vertical-align: middle;
+}
+
+ .task-list-control {
+  display: inline; /* Ensure label is inline incase theme sets it to block.*/
+}
+
+ .task-list-control {
+  position: relative;
+  display: inline-block;
+  color: #555;
+  cursor: pointer;
+}
+
+ .task-list-control input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  z-index: -1; /* Put the input behind the label so it doesn't overlay text */
+}
+
+ .task-list-indicator {
+  position: absolute;
+  top: -8px;
+  left: -18px;
+  display: block;
+  width:  14px;
+  height: 14px;
+  color: #eee;
+  background-color: #eee;
+  border-radius: .25rem;
+}
+
+ .task-list-control input[type="checkbox"]:checked + .task-list-indicator::before {
+  display: block;
+  margin-top: -4px;
+  margin-left: 2px;
+  font-size: 16px;
+  line-height: 1;
+  content: "✔";
+  color: #1EBB52;
+}
+</style>
+
+    </head>
+    <body>
+
+	<!-- <div class="sidenav"><br><br><br>
+		<a href="/view_notes">Notes</a>
+  		<a href="/view_diary">Diary</a>
+  		<a href="#clients">Schedule</a>
+	</div> -->
+	<div class ="main">
+        <!-- <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav" id="navbar-links">
+                        {% if username %}
+                            <li>
+                                <a href="/notes/add/">New Note</a>
+                            </li>
+                            <li>
+                                <a href="/tags/add/">New Tag</a>
+                            </li>
+                            <li>
+                                <a href="/tags/">View Tags</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if username %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    {{ username }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="/profile/settings/" class="dropdown-item">
+                                            <span class="glyphicon glyphicon-cog"></span> Profile Settings
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/profile/settings/change_password/" class="dropdown-item">
+                                            <span class="glyphicon glyphicon-wrench"></span>
+                                            Update Password
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/logout/" class="dropdown-item">
+                                            <span class="glyphicon glyphicon-log-out"></span> Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li><a href="/signup/"><span class="glyphicon glyphicon-user"></span> Sign Up </a></li>
+                            <li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
+                        {% endif %}
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!-- ./container-->
+	
+        </nav> -->
+        <div class="add-margin-top"></div>
+        {% block content %}
+
+        {% endblock %}
+        <div class="add-margin-bottom"></div>
+    </div>
+    </body>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/typed.min.js') }}"></script>
+    {{ pagedown.include_pagedown() }}
+    <script type="text/javascript">
+        var typed3 = new Typed('.element', {
+           strings: ['A Simple Note Taking App', 'A Simple Web App', 'A Simple Note Taking  Web App'],
+           typeSpeed: 100,
+           backSpeed: 100,
+           smartBackspace: true, // this is a default
+           loop: true,
+         });
+    </script>
+</html>
