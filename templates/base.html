@@ -4,8 +4,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title> Notes </title>
-        <link rel='stylesheet' href='/static/css/bootstrap.min.css'>
-        <link rel='stylesheet' href='/static/css/base.css'>
+        <link rel='stylesheet' href='{{ url_for("static", filename="css/bootstrap.min.css") }}'>
+        <link rel='stylesheet' href='{{ url_for("static", filename="css/base.css") }}'>
 
 <style>
 
@@ -97,47 +97,22 @@ h2 {
   content: "✔";
   color: #1EBB52;
 }
-
-table {
-  padding: 0; }
-  table tr {
-    border-top: 1px solid #cccccc;
-    background-color: white;
-    margin: 0;
-    padding: 0; }
-    table tr:nth-child(2n) {
-      background-color: #f8f8f8; }
-    table tr th {
-      font-weight: bold;
-      border: 1px solid #cccccc;
-      text-align: left;
-      margin: 0;
-      padding: 6px 13px; }
-    table tr td {
-      border: 1px solid #cccccc;
-      text-align: left;
-      margin: 0;
-      padding: 6px 13px; }
-    table tr th :first-child, table tr td :first-child {
-      margin-top: 0; }
-    table tr th :last-child, table tr td :last-child {
-margin-bottom: 0; }
 </style>
 
     </head>
     <body>
 
-	<div class="sidenav"><br><br><br>
+	<!-- <div class="sidenav"><br><br><br>
 		<a href="/view_notes">Notes</a>
   		<a href="/view_diary">Diary</a>
   		<a href="#clients">Schedule</a>
-	</div>
+	</div> -->
 	<div class ="main">
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <!-- <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav" id="navbar-links">
-                        
+                        {% if username %}
                             <li>
                                 <a href="/notes/add/">New Note</a>
                             </li>
@@ -147,36 +122,8 @@ margin-bottom: 0; }
                             <li>
                                 <a href="/tags/">View Tags</a>
                             </li>
-                        
+                        {% endif %}
                     </ul>
-                    <!-- <ul class="nav navbar-nav navbar-right">
-                        
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    sivaramaaaa <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="/profile/settings/" class="dropdown-item">
-                                            <span class="glyphicon glyphicon-cog"></span> Profile Settings
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/profile/settings/change_password/" class="dropdown-item">
-                                            <span class="glyphicon glyphicon-wrench"></span>
-                                            Update Password
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/logout/" class="dropdown-item">
-                                            <span class="glyphicon glyphicon-log-out"></span> Logout
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        
-                    </ul> -->
-
                     <ul class="nav navbar-nav navbar-right">
                         {% if username %}
                             <li class="dropdown">
@@ -210,44 +157,26 @@ margin-bottom: 0; }
                 </div><!--/.nav-collapse -->
             </div><!-- ./container-->
 	
-        </nav>
+        </nav> -->
         <div class="add-margin-top"></div>
+        {% block content %}
 
-    <div class="container" style="padding-top: 2%">
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-            <div class="thumbnail" style="padding: 3%">
-                {% for note in notes %}
-                    <legend><h3 class="text-center"><b>Note Details:</b></h3></legend>
-                    <h4><b>Note Added on:</b> <br><br> {{ note[1] | custom_date }}</h4>
-                    <br>
-                    <h4><b>Note Updated on:</b> <br><br> {{ note[2] | custom_date }}</h4>
-                    <br>
-                    <h4><b>Note Title:</b> <br><br> {{ note[3] }}</h4>
-                {% endfor %}
-            </div>
-        </div> <!-- ./column -->
-
-        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-            <div class="thumbnail"  style="padding: 3%">
-                {% for note in notes %}
-                    <a href="/notes/edit/{{ note[0] }}/" class="pull-left">
-                        <button type="button" class="btn btn-info">
-                            <span class="glyphicon glyphicon-edit"></span> Edit
-                        </button>
-                    </a>
-
-                    <a href="/notes/delete/{{ note[0] }}/" class="pull-right">
-                        <button type="button" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-trash"></span> Delete
-                        </button>
-                    </a>
-                    <br>
-                    <br>
-                    <h2>{{ note[4] | safe }}</h2>
-                {% endfor %}
-            </div>
-        </div>
-    </div> <!-- ./container -->
-</body>
+        {% endblock %}
+        <div class="add-margin-bottom"></div>
+    </div>
+    </body>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/typed.min.js') }}"></script>
+    {{ pagedown.include_pagedown() }}
+    <script type="text/javascript">
+        var typed3 = new Typed('.element', {
+           strings: ['A Simple Note Taking App', 'A Simple Web App', 'A Simple Note Taking  Web App'],
+           typeSpeed: 100,
+           backSpeed: 100,
+           smartBackspace: true, // this is a default
+           loop: true,
+         });
+    </script>
 </html>
-

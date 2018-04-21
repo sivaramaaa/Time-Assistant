@@ -182,7 +182,7 @@ def signup():
             session['username'] = username
             user_id = functions.check_user_exists(username, password)
             session['id'] = user_id
-            return redirect('/view_notes/')
+            return redirect('/main/')
     return render_template('signup.html', form=form)
 
 
