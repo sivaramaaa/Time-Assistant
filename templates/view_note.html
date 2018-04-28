@@ -9,9 +9,9 @@
 
 <style>
 
-h2 {
-	color: black;
-}
+p {
+    font-family: sans-serif;
+}	    
 
 .sidenav {
     height: 100%;
@@ -39,7 +39,7 @@ h2 {
 
 .main {
     margin-left: 160px; /* Same as the width of the sidenav */
-    font-size: 28px; /* Increased text to enable scrolling */
+    font-size: 20px; /* Increased text to enable scrolling */
     padding: 0px 10px;
 }
 
@@ -98,6 +98,10 @@ h2 {
   color: #1EBB52;
 }
 
+blockquote {
+  color: #808080
+}	
+
 table {
   padding: 0; }
   table tr {
@@ -122,6 +126,71 @@ table {
       margin-top: 0; }
     table tr th :last-child, table tr td :last-child {
 margin-bottom: 0; }
+
+.progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: 700;
+  width: 100%;
+  margin: 0;
+  line-height: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 1.2rem;
+  float: left;
+  background-color: #2979ff;
+}
+
+.progress {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0;
+  height: 1.2rem;
+  background-color: #eeeeee;
+  position: relative;
+}
+
+.progress.thin {
+  margin-top: 0.9rem;
+  height: 0.4rem;
+}
+
+.progress.thin .progress-label {
+  margin-top: -0.4rem;
+}
+
+.progress.thin .progress-bar {
+  height: 0.4rem;
+}
+
+.progress-100plus .progress-bar {
+  background-color: #00e676;
+}
+
+.progress-80plus .progress-bar {
+  background-color: #fbc02d;
+}
+
+.progress-60plus .progress-bar {
+  background-color: #ff9100;
+}
+
+.progress-40plus .progress-bar {
+  background-color: #ff5252;
+}
+
+.progress-20plus .progress-bar {
+  background-color: #ff1744;
+}
+
+.progress-0plus .progress-bar {
+  background-color: #f50057;
+}
+
+
 </style>
 
     </head>
@@ -183,7 +252,7 @@ margin-bottom: 0; }
         <div class="add-margin-top"></div>
 
     <div class="container" style="padding-top: 2%">
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <!-- div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
             <div class="thumbnail" style="padding: 3%">
                 {% for note in notes %}
                     <legend><h3 class="text-center"><b>Note Details:</b></h3></legend>
@@ -194,10 +263,11 @@ margin-bottom: 0; }
                     <h4><b>Note Title:</b> <br><br> {{ note[3] }}</h4>
                 {% endfor %}
             </div>
-        </div> <!-- ./column -->
+    	</div> --> <!-- ./column -->
 
-        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-            <div class="thumbnail"  style="padding: 3%">
+	<!--<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">-->
+	<div style="padding-left: 15%">
+            <div class="thumbnail"  style="padding: 3%;width: 95%">
                 {% for note in notes %}
                     <a href="/notes/edit/{{ note[0] }}/" class="pull-left">
                         <button type="button" class="btn btn-info">
@@ -212,10 +282,13 @@ margin-bottom: 0; }
                     </a>
                     <br>
                     <br>
+		    {% if total %}
+		    <p><img src="/static/images/open.png">  {{opn}} Open &nbsp;&nbsp;<img src="/static/images/closed.png">  {{tick}} Closed </p>
+		    {% endif %}
                     <h2>{{ note[4] | safe }}</h2>
                 {% endfor %}
             </div>
-        </div>
+	</div>
     </div> <!-- ./container -->
 </body>
 </html>

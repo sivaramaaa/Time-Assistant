@@ -30,19 +30,14 @@ pagedown = PageDown(app)
 parser = reqparse.RequestParser()
 app.secret_key = str(random.randint(1, 20))
 
-"""extensions = [
-    'markdown.extensions.tables',
-    'pymdownx.magiclink',
-    'pymdownx.betterem',
-    'pymdownx.tilde',
-    'pymdownx.emoji',
-    'pymdownx.tasklist',
-    'pymdownx.superfences'
-]"""
+# pymdownx.magiclink -- Add this later !!!
 
 extensions = [
-	'markdown.extensions.tables',
-	'pymdownx.tasklist'
+        'markdown.extensions.tables',
+        'pymdownx.tasklist',
+        'pymdownx.tilde',
+        'pymdownx.emoji',
+        'pymdownx.progressbar'
 ]
 
 ############################################## Profile-Logic ##########################################################
@@ -256,6 +251,21 @@ def view_notes():
         )
 
 
+def add_progress(note):
+
+	if "* [ ]" in note :
+	    tick =  note.count("* [x]")
+	    total = note.count("* [ ]")+ note.count("* [x]")
+	    per = int((float(tick) / float(total)) * 100)
+            return '[='+str(per)+'%'+' "'+str(per)+'%"]'+"\n\n"+note
+        else :
+            return note
+
+def get_count(note):
+    tick =  note.count("* [x]")
+    total = note.count("* [ ]")+ note.count("* [x]")
+    return tick,total
+
 @app.route("/notes/add/", methods=['GET', 'POST'])
 @login_required
 def add_note():
@@ -272,12 +282,13 @@ def add_note():
         note_title = request.form['note_title']
         note_markdown = form.note.data
         note = Markup(markdown.markdown(note_markdown,  extensions=extensions))
-
         try:
             tags = form.tags.data
             tags = ','.join(tags)
         except:
             tags = None
+
+        note_markdown = add_progress(note_markdown)
 
         functions.add_note(note_title, note, note_markdown, tags, session['id'])
         return redirect('/view_notes/')
@@ -291,7 +302,10 @@ def view_note(id):
         App for viewing a specific note
     '''
     notes = functions.get_data_using_id(id)
-    return render_template('view_note.html', notes=notes, username=session['username'])
+    data = notes[0]
+    tick , total = get_count (data[5])
+    opn = total - tick
+    return render_template('view_note.html', notes=notes, tick=tick, total=total, opn=opn, username=session['username'])
 
 
 @app.route("/notes/edit/<note_id>/", methods=['GET', 'POST'])
@@ -324,6 +338,12 @@ def edit_note(note_id):
             tags = ','.join(tags)
         except:
             tags = None
+
+        if '[=' in note_markdown :
+            my_text = '\n'.join(note_markdown.split("\n")[1:])    
+        else :
+            my_text = note_markdown
+        note_markdown = add_progress(my_text)
 
         note = Markup(markdown.markdown(note_markdown ,  extensions=extensions))
         functions.edit_note(note_title, note, note_markdown, tags, note_id=note_id)
