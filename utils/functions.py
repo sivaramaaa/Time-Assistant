@@ -121,7 +121,7 @@ def get_data_using_user_id(id):
     conn = get_database_connection()
     try:
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM notes WHERE user_id=' + str(id))
+        cursor.execute('SELECT * FROM notes WHERE user_id=' + str(id)+' ORDER BY updated DESC')
         results = cursor.fetchall()
         cursor.close()
         if len(results) == 0:
@@ -428,7 +428,6 @@ def get_search_data(pattern, user_id):
         return results
     except:
         cursor.close()
-
 
 def get_rest_data_using_user_id(id):
     '''

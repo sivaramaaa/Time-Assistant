@@ -37,6 +37,7 @@ extensions = [
         'pymdownx.tasklist',
         'pymdownx.tilde',
         'pymdownx.emoji',
+        'pymdownx.highlight',
         'pymdownx.progressbar'
 ]
 
@@ -231,7 +232,7 @@ def view_notes():
         App for user profile can only be accessed only after successful login
     '''
     if request.method == 'GET':
-        notes = functions.get_data_using_user_id(session['id'])
+        notes = functions.get_data_using_user_id (session['id'])
         tags = []
         if notes:
             for note in notes:
